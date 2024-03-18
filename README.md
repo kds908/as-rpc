@@ -18,7 +18,7 @@
 
 - as-rpc-demo-api:
     
-    demo 的一部分
+    demo 的一部分，对外提供接口API调用
 
 - as-rpc-demo-provider:
 
@@ -46,6 +46,15 @@
    CONTENT-TYPE application/json
    请求参数 RpcRequest json
 8. 返回结果
+
+**问题**
+
+- 假设再增加个findById方法，参数类型为 Long，之前的method 不再满足要求。
+    
+    可将 method 改为方法签名，如 findById_Long。
+- 远程调用依然有 toString、 hashCode 等方法，不必要，本地就可以解决
+- 会有参数不匹配问题，需要类型转换处理
+
 ---
 
 Practice 02
