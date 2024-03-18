@@ -14,9 +14,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author: Abner Song
- * @date: 2024/3/18 22:09
- * @description: Provider 启动类
+ * Provider 启动类
+ *
+ * <p>
+ * {@code @author:} Abner Song
+ * <p>
+ * {@code @date:} 2024/3/18 22:09
  */
 @Data
 public class ProviderBootstrap implements ApplicationContextAware {

@@ -4,9 +4,10 @@ import java.lang.annotation.*;
 
 /**
  * Description for this class
- *
- * @author: Abner Song
- * @date: 2024/3/18 22:36
+ * <p>
+ * {@code @author:} Abner Song
+ * <p>
+ * {@code @date:} 2024/3/18 22:36
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
