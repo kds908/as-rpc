@@ -9,5 +9,5 @@ package as.rpc.demo.api;
  * {@code @date:} 2024/3/19 0:06
  */
 public interface OrderService {
-    Order findById(Long id);
+    Order findById(Integer id);
 }
