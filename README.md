@@ -80,6 +80,10 @@
 4. 创建配置类 ConsumerConfig，通过 @Bean 实例化 ConsumerBootstrap
 5. 注入 ApplicationRunner Bean，并通过@Order(Integer.MIN_VALUE) 提高执行优先级，调用执行 ConsumerBootstrap#start() 方法
 6. Consumer模块 的 Application 启动类中，注入 ApplicationRunner 的 Bean。启动后执行，从而模拟业务的调用与功能验证。
-
-
+---
 ## Practice 03
+方法重载后，相同方法名，不同参数，之前的provider服务就不再满足需求。
+
+1. 个性 RpcRequest， 变更方法名为方法签名
+2. 定义工具类方法，拼接方法签名，这里使用 方法名@参数个数_参数1_2_3... 的签名方式
+3. 
