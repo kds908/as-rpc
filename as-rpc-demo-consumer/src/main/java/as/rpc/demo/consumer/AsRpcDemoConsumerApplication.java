@@ -29,8 +29,20 @@ public class AsRpcDemoConsumerApplication {
         return x -> {
             User user = userService.findById(1);
             System.out.println("RPC RESULT userService.findById(1) = " + user);
-            Order order = orderService.findById(2);
-            System.out.println("RPC RESULT orderService.findById(2) = " + order);
+
+            User user1 = userService.findById(1, "abner");
+            System.out.println("RPC RESULT userService.findById(1, 'abner') = " + user1);
+
+            String name = userService.getName();
+            System.out.println("RPC RESULT userService.getName() = " + name);
+
+            String name2 = userService.getName(1234);
+            System.out.println("RPC RESULT userService.getName(1234) = " + name2);
+
+
+//            Order order = orderService.findById(2);
+//            System.out.println("RPC RESULT orderService.findById(2) = " + order);
+
 //            Order order404 = orderService.findById(404);
 //            System.out.println("RPC RESULT orderService.findById(404) = " + order404);
         };

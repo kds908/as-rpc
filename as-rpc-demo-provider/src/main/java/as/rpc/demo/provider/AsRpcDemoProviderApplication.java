@@ -35,12 +35,21 @@ public class AsRpcDemoProviderApplication {
     @Bean
     ApplicationRunner providerRun() {
         return e -> {
+            // test 1 param method
             RpcRequest request = new RpcRequest();
             request.setService("as.rpc.demo.api.UserService");
-            request.setMethod("findById");
+            request.setMethodSign("findById@1_int");
             request.setArgs(new Object[]{100});
             RpcResponse<Object> response = invoke(request);
             System.out.println("return : " + response.getData());
+
+            // test multi param method
+            RpcRequest request2 = new RpcRequest();
+            request2.setService("as.rpc.demo.api.UserService");
+            request2.setMethodSign("findById@2_int_java.lang.String");
+            request2.setArgs(new Object[]{100, "abner"});
+            RpcResponse<Object> response2 = invoke(request2);
+            System.out.println("return : " + response2.getData());
         };
     }
 }

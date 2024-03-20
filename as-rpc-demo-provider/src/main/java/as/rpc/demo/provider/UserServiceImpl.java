@@ -9,7 +9,22 @@ import org.springframework.stereotype.Service;
 @ASProvider
 public class UserServiceImpl implements UserService {
     @Override
-    public User findById(Integer id) {
+    public User findById(int id) {
         return new User(id, "AS-" + System.currentTimeMillis());
+    }
+
+    @Override
+    public User findById(int id, String name) {
+        return new User(id, name + "-" + System.currentTimeMillis());
+    }
+
+    @Override
+    public String getName() {
+        return "hahaha";
+    }
+
+    @Override
+    public String getName(int id) {
+        return "hahahaha-" + id;
     }
 }

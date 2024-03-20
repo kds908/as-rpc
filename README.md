@@ -82,3 +82,4 @@
 6. Consumer模块 的 Application 启动类中，注入 ApplicationRunner 的 Bean。启动后执行，从而模拟业务的调用与功能验证。
 
 
+## Practice 03

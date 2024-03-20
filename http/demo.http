@@ -4,8 +4,17 @@ Content-Type: application/json
 
 {
   "service": "as.rpc.demo.api.UserService",
-  "method": "findById",
+  "methodSign": "findById@1_int",
   "args": [100]
+}
+###
+POST http://localhost:8080
+Content-Type: application/json
+
+{
+  "service": "as.rpc.demo.api.UserService",
+  "methodSign": "findById@2_int_java.lang.String",
+  "args": [100, "abner"]
 }
 
 ### mock
@@ -14,7 +23,7 @@ Content-Type: application/json
 
 {
   "service": "as.rpc.demo.api.UserService",
-  "method": "toString",
+  "methodSign": "toString",
   "args": []
 }
 
@@ -24,6 +33,6 @@ Content-Type: application/json
 
 {
   "service": "as.rpc.demo.api.OrderService",
-  "method": "findById",
+  "methodSign": "findById@1_int",
   "args": [300]
 }
