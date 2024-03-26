@@ -1,9 +1,13 @@
 package as.rpc.core.provider;
 
 import as.rpc.core.api.RegistryCenter;
+import as.rpc.core.consumer.ConsumerBootstrap;
 import as.rpc.core.registry.ZkRegistryCenter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 
 /**
  * Provider 配置类
@@ -23,5 +27,21 @@ public class ProviderConfig {
     @Bean(initMethod = "start", destroyMethod = "stop")
     public RegistryCenter providerRC() {
         return new ZkRegistryCenter();
+    }
+
+    /**
+     * 待服务完全启动后，再调用start将服务暴露
+     * 避免注册到注册中心，但服务未完全启动不可用的状态
+     * @param providerBootstrap
+     * @return
+     */
+    @Bean
+    @Order(Integer.MIN_VALUE)
+    public ApplicationRunner providerConfigRunner(@Autowired ProviderBootstrap providerBootstrap) {
+        return x -> {
+            System.out.println("providerBootstrap starting...");
+            providerBootstrap.start();
+            System.out.println("providerBootstrap started...");
+        };
     }
 }
