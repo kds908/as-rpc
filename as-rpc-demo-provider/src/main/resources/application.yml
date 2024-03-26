@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: as-rpc-demo-provider
+server:
+  port: 8081

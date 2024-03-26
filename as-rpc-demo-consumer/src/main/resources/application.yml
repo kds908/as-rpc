@@ -3,3 +3,6 @@ spring:
     name: as-rpc-demo-consumer
 server:
   port: 8088
+
+as-rpc:
+  providers: http://localhost:8081/, http://localhost:8082/

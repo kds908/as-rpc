@@ -83,6 +83,7 @@
 ---
 ## Practice 03
 **重载**
+
 方法重载后，相同方法名，不同参数，之前的provider服务就不再满足需求。
 
 1. 个性 RpcRequest， 变更方法名为方法签名
@@ -94,5 +95,16 @@
 
 实际返回结果位于 as.rpc.core.consumer.ASInvocationHandler#invoke 中 RpcResponse
 1. 创建类型转换工具类 as.rpc.core.util.TypeUtils
-2. 
+2. 对基本数据类型、数组、Map等类型转换
+
+--- 
+## Practice 04
+**负载均衡 Load Balance**
+
+- Filter
+
+- LoadBalancer
+
+- Router
+
 

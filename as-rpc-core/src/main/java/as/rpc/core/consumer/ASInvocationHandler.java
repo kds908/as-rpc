@@ -1,7 +1,6 @@
 package as.rpc.core.consumer;
 
-import as.rpc.core.api.RpcRequest;
-import as.rpc.core.api.RpcResponse;
+import as.rpc.core.api.*;
 import as.rpc.core.util.MethodUtils;
 import as.rpc.core.util.TypeUtils;
 import com.alibaba.fastjson.JSON;
@@ -13,6 +12,7 @@ import java.io.IOException;
 import java.lang.reflect.Array;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
@@ -26,11 +26,16 @@ import java.util.concurrent.TimeUnit;
  */
 public class ASInvocationHandler implements InvocationHandler {
     Class<?> service;
+    RpcContext context;
+    List<String> providers;
 
     final static MediaType JSON_TYPE = MediaType.get("application/json; charset=utf-8");
 
-    public ASInvocationHandler(Class<?> service) {
+    public ASInvocationHandler(Class<?> service, RpcContext context,
+                               List<String> providers) {
         this.service = service;
+        this.context = context;
+        this.providers = providers;
     }
 
     @Override
@@ -40,7 +45,10 @@ public class ASInvocationHandler implements InvocationHandler {
         request.setMethodSign(MethodUtils.methodSign(method));
         request.setArgs(args);
 
-        RpcResponse response = post(request);
+        List<String> urls = context.getRouter().route(this.providers);
+        String url = (String) context.getLoadBalancer().choose(urls);
+        System.out.println("loadBalancer.choose(urls) ===> " + url);
+        RpcResponse response = post(request, url);
         if (response.isStatus()) {
             // 返回结果转为java Object, 返回类型为方法的 return type
 //            return JSONObject.toJavaObject((JSONObject) response.getData(), method.getReturnType());
@@ -70,10 +78,10 @@ public class ASInvocationHandler implements InvocationHandler {
             .connectTimeout(1, TimeUnit.SECONDS)
             .build();
 
-    private RpcResponse post(RpcRequest request) {
+    private RpcResponse post(RpcRequest request, String url) {
         String reqJson = JSON.toJSONString(request);
         Request okRequest = new Request.Builder()
-                .url("http://localhost:8080/")
+                .url(url)
                 .post(RequestBody.create(reqJson, JSON_TYPE))
                 .build();
         try {

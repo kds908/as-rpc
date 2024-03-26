@@ -1,5 +1,9 @@
 package as.rpc.core.consumer;
 
+import as.rpc.core.api.LoadBalancer;
+import as.rpc.core.api.Router;
+import as.rpc.core.cluster.RandomLoadBalance;
+import as.rpc.core.cluster.RoundRibbonLoadBalance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
@@ -29,5 +33,17 @@ public class ConsumerConfig {
             consumerBootstrap.start();
             System.out.println("consumerBootstrap end");
         };
+    }
+
+    @Bean
+    public LoadBalancer loadBalancer() {
+//        return LoadBalancer.Default;
+//        return new RandomLoadBalance();
+        return new RoundRibbonLoadBalance();
+    }
+
+    @Bean
+    public Router router() {
+        return Router.Default;
     }
 }

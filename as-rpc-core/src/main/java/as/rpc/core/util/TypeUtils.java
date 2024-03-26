@@ -22,7 +22,7 @@ public class TypeUtils {
             return origin;
         }
 
-        if (origin instanceof HashMap<?, ?> map) {
+        if (origin instanceof Map<?, ?> map) {
             JSONObject jsonObject = new JSONObject((Map<String, Object>) map);
             return jsonObject.toJavaObject(type);
         }
