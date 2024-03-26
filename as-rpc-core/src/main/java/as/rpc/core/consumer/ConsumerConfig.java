@@ -5,6 +5,7 @@ import as.rpc.core.api.RegistryCenter;
 import as.rpc.core.api.Router;
 import as.rpc.core.cluster.RandomLoadBalance;
 import as.rpc.core.cluster.RoundRibbonLoadBalance;
+import as.rpc.core.registry.ZkRegistryCenter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationRunner;
@@ -54,7 +55,7 @@ public class ConsumerConfig {
     }
 
     @Bean(initMethod = "start", destroyMethod = "stop")
-    public RegistryCenter consumer_rc() {
-        return new RegistryCenter.StaticRegistryCenter(List.of(servers.split(",")));
+    public RegistryCenter consumerRC() {
+        return new ZkRegistryCenter();
     }
 }

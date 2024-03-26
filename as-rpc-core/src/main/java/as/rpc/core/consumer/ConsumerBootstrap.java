@@ -5,6 +5,8 @@ import as.rpc.core.api.LoadBalancer;
 import as.rpc.core.api.RegistryCenter;
 import as.rpc.core.api.Router;
 import as.rpc.core.api.RpcContext;
+import as.rpc.core.registry.ChangedListener;
+import as.rpc.core.registry.Event;
 import lombok.Data;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -17,6 +19,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Consumer 启动类
@@ -46,7 +49,7 @@ public class ConsumerBootstrap implements ApplicationContextAware, EnvironmentAw
             Object bean = applicationContext.getBean(name);
             List<Field> fields = findAnnotationField(bean.getClass());
             fields.forEach(f -> {
-                System.out.println("======>>>" + f.getName());
+                System.out.println(" ======>>> " + f.getName());
                 try {
                     Class<?> service = f.getType();
                     String serviceName = service.getCanonicalName();
@@ -72,8 +75,23 @@ public class ConsumerBootstrap implements ApplicationContextAware, EnvironmentAw
      */
     private Object createFromRegistry(Class<?> service, RpcContext context, RegistryCenter rc) {
         String serviceName = service.getCanonicalName();
-        List<String> providers = rc.fetchAll(serviceName);
+        // 从注册中心获取所有服务节点，并转换服务地址
+        List<String> providers = mapUrl(rc.fetchAll(serviceName));
+        System.out.println(" =====> map to providers:");
+        providers.forEach(System.out::println);
+
+        rc.subscribe(serviceName, event -> {
+            providers.clear();
+            providers.addAll(mapUrl(event.getData()));
+        });
+
         return createConsumer(service, context, providers);
+    }
+
+    private List<String> mapUrl(List<String> nodes) {
+        return nodes.stream()
+                .map(n -> "http://" + n.replace("_", ":"))
+                .collect(Collectors.toList());
     }
 
     /**
