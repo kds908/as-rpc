@@ -5,8 +5,9 @@ import java.util.List;
 /**
  * 注册中心
  * <p>
- * {@code {@author}} abners.
- * {@code {@date} 2024/3/26 14:59
+ * {@code @author} abners.
+ * <p>
+ * {@code @date} 2024/3/26 14:59
  */
 public interface RegistryCenter {
     void start();
@@ -22,6 +23,8 @@ public interface RegistryCenter {
     List<String> fetchAll(String service);
 
     // void subscribe();
+
+    // void heartbeat();
 
     /**
      * 静态注册中心

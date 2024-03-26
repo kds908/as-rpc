@@ -28,7 +28,6 @@ public class TypeUtils {
         }
 
         if (type.isArray()) {
-            Object[] arr;
             if (origin instanceof List<?> list) {
                 origin = list.toArray();
             }
@@ -36,7 +35,12 @@ public class TypeUtils {
             Class<?> componentType = type.getComponentType();
             Object result = Array.newInstance(componentType, length);
             for (int i = 0; i < length; i++) {
-                Array.set(result, i, Array.get(origin, i));
+                if (componentType.isPrimitive() || componentType.getPackageName().startsWith("java")) {
+                    Array.set(result, i, Array.get(origin, i));
+                } else {
+                    Object castObject = cast(Array.get(origin, i), componentType);
+                    Array.set(result, i, castObject);
+                }
             }
             return result;
         }
