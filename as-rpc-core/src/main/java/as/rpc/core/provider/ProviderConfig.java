@@ -1,5 +1,7 @@
 package as.rpc.core.provider;
 
+import as.rpc.core.api.RegistryCenter;
+import as.rpc.core.registry.ZkRegistryCenter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -16,5 +18,10 @@ public class ProviderConfig {
     @Bean
     ProviderBootstrap providerBootstrap() {
         return new ProviderBootstrap();
+    }
+
+    @Bean(initMethod = "start", destroyMethod = "stop")
+    public RegistryCenter providerRC() {
+        return new ZkRegistryCenter();
     }
 }
