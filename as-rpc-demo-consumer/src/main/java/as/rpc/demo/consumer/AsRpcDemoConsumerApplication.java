@@ -12,6 +12,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 
+import java.util.Arrays;
+
 @SpringBootApplication
 @Import({ConsumerConfig.class})
 public class AsRpcDemoConsumerApplication {
@@ -39,6 +41,13 @@ public class AsRpcDemoConsumerApplication {
             String name2 = userService.getName(1234);
             System.out.println("RPC RESULT userService.getName(1234) = " + name2);
 
+            System.out.println("userService.getId(123) = " + userService.getId(123));
+
+            System.out.println("userService.getId(Use) = " + userService.getId(new User(123221, "AS-abc")));
+
+            System.out.println("userService.getIds() = " + Arrays.toString(userService.getIds()));
+
+            System.out.println("userService.getIds(int[] ids) = " + Arrays.toString(userService.getIds(new int[]{4,5,6,7,8})));
 
 //            Order order = orderService.findById(2);
 //            System.out.println("RPC RESULT orderService.findById(2) = " + order);

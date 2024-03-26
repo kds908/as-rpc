@@ -5,6 +5,7 @@ import as.rpc.core.api.RpcRequest;
 import as.rpc.core.api.RpcResponse;
 import as.rpc.core.meta.ProviderMeta;
 import as.rpc.core.util.MethodUtils;
+import as.rpc.core.util.TypeUtils;
 import jakarta.annotation.PostConstruct;
 import lombok.Data;
 import org.springframework.context.ApplicationContext;
@@ -68,7 +69,9 @@ public class ProviderBootstrap implements ApplicationContextAware {
         try {
             ProviderMeta meta = findProviderMeta(providerMetas, methodSign);
             Method method = meta.getMethod();
-            Object result = method.invoke(meta.getServiceImpl(), request.getArgs());
+            // 对参数进行类型转换
+            Object[] args = processArgs(request.getArgs(), method.getParameterTypes());
+            Object result = method.invoke(meta.getServiceImpl(), args);
             response.setStatus(true);
             response.setData(result);
         } catch (InvocationTargetException e) {
@@ -77,6 +80,17 @@ public class ProviderBootstrap implements ApplicationContextAware {
             response.setEx(new RuntimeException(e.getMessage()));
         }
         return response;
+    }
+
+    private Object[] processArgs(Object[] args, Class<?>[] parameterTypes) {
+        if (args == null || args.length == 0) {
+            return args;
+        }
+        Object[] actualArgs = new Object[args.length];
+        for (int i = 0; i < args.length; i++) {
+            actualArgs[i] = TypeUtils.cast(args[i], parameterTypes[i]);
+        }
+        return actualArgs;
     }
 
     private ProviderMeta findProviderMeta(List<ProviderMeta> providerMetas, String methodSign) {
