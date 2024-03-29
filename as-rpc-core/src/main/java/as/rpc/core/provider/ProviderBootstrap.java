@@ -36,6 +36,7 @@ import java.util.Map;
 public class ProviderBootstrap implements ApplicationContextAware {
 
     ApplicationContext applicationContext;
+    RegistryCenter rc;
     // 多值Map
     private MultiValueMap<String, ProviderMeta> skeleton = new LinkedMultiValueMap<>();
     private String instance;
@@ -60,13 +61,17 @@ public class ProviderBootstrap implements ApplicationContextAware {
     public void start() {
         String ip = InetAddress.getLocalHost().getHostAddress();
         instance = ip + "_" + port;
+        rc = applicationContext.getBean(RegistryCenter.class);
+        rc.start();
         // skeleton 中即为要注册的内容
         skeleton.keySet().forEach(this::registerService);
     }
 
     @PreDestroy
     public void stop() {
+        System.out.println(" =====> unregister all services");
         skeleton.keySet().forEach(this::unregisterService);
+        rc.stop();
     }
 
     /**
@@ -74,7 +79,6 @@ public class ProviderBootstrap implements ApplicationContextAware {
      * @param service 服务
      */
     private void registerService(String service) {
-        RegistryCenter rc = applicationContext.getBean(RegistryCenter.class);
         rc.register(service, instance);
     }
 
@@ -83,8 +87,7 @@ public class ProviderBootstrap implements ApplicationContextAware {
      * @param service 服务
      */
     private void unregisterService(String service) {
-        RegistryCenter rc = applicationContext.getBean(RegistryCenter.class);
-        rc.register(service, instance);
+        rc.unregister(service, instance);
     }
 
     private void generateInterface(Object e) {
