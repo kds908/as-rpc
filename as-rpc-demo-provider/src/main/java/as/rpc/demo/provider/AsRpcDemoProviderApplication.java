@@ -4,6 +4,7 @@ import as.rpc.core.api.RpcRequest;
 import as.rpc.core.api.RpcResponse;
 import as.rpc.core.provider.ProviderBootstrap;
 import as.rpc.core.provider.ProviderConfig;
+import as.rpc.core.provider.ProviderInvoker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
@@ -18,18 +19,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Import({ProviderConfig.class})
 public class AsRpcDemoProviderApplication {
+    @Autowired
+    ProviderInvoker providerInvoker;
 
     public static void main(String[] args) {
         SpringApplication.run(AsRpcDemoProviderApplication.class, args);
     }
 
-    @Autowired
-    ProviderBootstrap providerBootstrap;
-
     // 使用 HTTP + JSON 实现序列化和通信
     @RequestMapping("/")
     public RpcResponse<Object> invoke(@RequestBody RpcRequest request) {
-        return providerBootstrap.invoke(request);
+        return providerInvoker.invoke(request);
     }
 
     @Bean
