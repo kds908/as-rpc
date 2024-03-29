@@ -1,7 +1,11 @@
 package as.rpc.core.util;
 
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author abners.
@@ -58,5 +62,27 @@ public class MethodUtils {
                 || "wait".equals(methodName)
                 || "getClass".equals(methodName)
                 || "notify".equals(methodName);
+    }
+
+    /**
+     * 获取类中所有带有 @ASConsumer 注解的 Field
+     * @param aClass 类
+     * @param annotationClass
+     * @return field 数组
+     */
+    public static List<Field> findAnnotationField(Class<?> aClass, Class<? extends Annotation> annotationClass) {
+        List<Field> result = new ArrayList<>();
+        while (aClass != null) {
+            Field[] fields = aClass.getDeclaredFields();
+            for (Field field : fields) {
+                if (field.isAnnotationPresent(annotationClass)) {
+                    result.add(field);
+                }
+            }
+            // class 为代理扩展类，不能直接获取原类中注解，通过 getSuperclass() 获取原类
+            aClass = aClass.getSuperclass();
+        }
+
+        return result;
     }
 }

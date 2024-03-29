@@ -34,10 +34,8 @@ import java.util.Map;
  */
 @Data
 public class ProviderBootstrap implements ApplicationContextAware {
-
     ApplicationContext applicationContext;
     RegistryCenter rc;
-    // 多值Map
     private MultiValueMap<String, ProviderMeta> skeleton = new LinkedMultiValueMap<>();
     private String instance;
     @Value("${server.port}")

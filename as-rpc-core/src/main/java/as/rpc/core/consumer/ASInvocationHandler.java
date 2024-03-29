@@ -4,16 +4,11 @@ import as.rpc.core.api.*;
 import as.rpc.core.util.MethodUtils;
 import as.rpc.core.util.TypeUtils;
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import okhttp3.*;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
-import java.util.List;
-import java.util.Objects;
+import java.lang.reflect.*;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -51,21 +46,8 @@ public class ASInvocationHandler implements InvocationHandler {
         RpcResponse response = post(request, url);
         if (response.isStatus()) {
             // 返回结果转为java Object, 返回类型为方法的 return type
-//            return JSONObject.toJavaObject((JSONObject) response.getData(), method.getReturnType());
             Object data = response.getData();
-            if (data instanceof JSONObject jsonResult) {
-                return jsonResult.toJavaObject(method.getReturnType());
-            } else if (data instanceof JSONArray jsonArray) {
-                Object[] array = jsonArray.toArray();
-                Class<?> componentType = method.getReturnType().getComponentType();
-                Object result = Array.newInstance(componentType, array.length);
-                for (int i = 0; i < array.length; i++) {
-                    Array.set(result, i, array[i]);
-                }
-                return result;
-            } else {
-                return TypeUtils.cast(data, method.getReturnType());
-            }
+            return TypeUtils.castMethodResult(method, data);
         } else {
             throw response.getEx();
         }
