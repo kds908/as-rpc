@@ -1,5 +1,6 @@
 package as.rpc.core.api;
 
+import as.rpc.core.meta.InstanceMeta;
 import lombok.Data;
 
 import java.util.List;
@@ -15,7 +16,7 @@ public class RpcContext {
     // todo
     List<Filter> filters;
 
-    Router router;
+    Router<InstanceMeta> router;
 
-    LoadBalancer loadBalancer;
+    LoadBalancer<InstanceMeta> loadBalancer;
 }

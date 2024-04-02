@@ -1,5 +1,6 @@
 package as.rpc.core.api;
 
+import as.rpc.core.meta.InstanceMeta;
 import as.rpc.core.registry.ChangedListener;
 
 import java.util.List;
@@ -22,14 +23,14 @@ public interface RegistryCenter {
      * @param service 服务
      * @param instance 实例名
      */
-    void register(String service, String instance);
+    void register(String service, InstanceMeta instance);
 
     /**
      * 取消注册
      * @param service 服务
      * @param instance 实例名
      */
-    void unregister(String service, String instance);
+    void unregister(String service, InstanceMeta instance);
 
     // consumer 侧
 
@@ -38,7 +39,7 @@ public interface RegistryCenter {
      * @param service
      * @return
      */
-    List<String> fetchAll(String service);
+    List<InstanceMeta> fetchAll(String service);
 
     /**
      * 订阅
@@ -55,9 +56,9 @@ public interface RegistryCenter {
      * 静态注册中心
      */
     class StaticRegistryCenter implements RegistryCenter {
-        List<String> providers;
+        List<InstanceMeta> providers;
 
-        public StaticRegistryCenter(List<String> providers) {
+        public StaticRegistryCenter(List<InstanceMeta> providers) {
             this.providers = providers;
         }
 
@@ -72,17 +73,17 @@ public interface RegistryCenter {
         }
 
         @Override
-        public void register(String service, String instance) {
+        public void register(String service, InstanceMeta instance) {
 
         }
 
         @Override
-        public void unregister(String service, String instance) {
+        public void unregister(String service, InstanceMeta instance) {
 
         }
 
         @Override
-        public List<String> fetchAll(String service) {
+        public List<InstanceMeta> fetchAll(String service) {
             return providers;
         }
 

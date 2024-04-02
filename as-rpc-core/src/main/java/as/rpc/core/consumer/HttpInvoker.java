@@ -2,6 +2,7 @@ package as.rpc.core.consumer;
 
 import as.rpc.core.api.RpcRequest;
 import as.rpc.core.api.RpcResponse;
+import as.rpc.core.meta.InstanceMeta;
 
 /**
  * Description for this class

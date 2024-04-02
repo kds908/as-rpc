@@ -5,6 +5,7 @@ import as.rpc.core.api.LoadBalancer;
 import as.rpc.core.api.RegistryCenter;
 import as.rpc.core.api.Router;
 import as.rpc.core.api.RpcContext;
+import as.rpc.core.meta.InstanceMeta;
 import as.rpc.core.util.MethodUtils;
 import lombok.Data;
 import org.springframework.context.ApplicationContext;
@@ -17,7 +18,6 @@ import java.lang.reflect.Proxy;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * Consumer 启动类
@@ -74,22 +74,16 @@ public class ConsumerBootstrap implements ApplicationContextAware, EnvironmentAw
     private Object createFromRegistry(Class<?> service, RpcContext context, RegistryCenter rc) {
         String serviceName = service.getCanonicalName();
         // 从注册中心获取所有服务节点，并转换服务地址
-        List<String> providers = mapUrl(rc.fetchAll(serviceName));
+        List<InstanceMeta> providers = rc.fetchAll(serviceName);
         System.out.println(" =====> map to providers:");
         providers.forEach(System.out::println);
 
         rc.subscribe(serviceName, event -> {
             providers.clear();
-            providers.addAll(mapUrl(event.getData()));
+            providers.addAll(event.getData());
         });
 
         return createConsumer(service, context, providers);
-    }
-
-    private List<String> mapUrl(List<String> nodes) {
-        return nodes.stream()
-                .map(n -> "http://" + n.replace("_", ":"))
-                .collect(Collectors.toList());
     }
 
     /**
@@ -100,7 +94,7 @@ public class ConsumerBootstrap implements ApplicationContextAware, EnvironmentAw
      * @param providers
      * @return
      */
-    private Object createConsumer(Class<?> service, RpcContext context, List<String> providers) {
+    private Object createConsumer(Class<?> service, RpcContext context, List<InstanceMeta> providers) {
         return Proxy.newProxyInstance(service.getClassLoader(),
                 new Class[]{service}, new ASInvocationHandler(service, context, providers));
     }

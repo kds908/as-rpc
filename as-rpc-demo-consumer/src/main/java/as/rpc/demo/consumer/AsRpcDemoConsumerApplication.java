@@ -58,8 +58,8 @@ public class AsRpcDemoConsumerApplication {
 
             System.out.println("userService.getIds(int[] ids) = " + Arrays.toString(userService.getIds(new int[]{4, 5, 6, 7, 8})));
 
-            Order order = orderService.findById(2);
-            System.out.println("RPC RESULT orderService.findById(2) = " + order);
+//            Order order = orderService.findById(2);
+//            System.out.println("RPC RESULT orderService.findById(2) = " + order);
 
 //            Order order404 = orderService.findById(404);
 //            System.out.println("RPC RESULT orderService.findById(404) = " + order404);
