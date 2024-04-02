@@ -31,7 +31,6 @@ import java.util.stream.Collectors;
 public class ConsumerBootstrap implements ApplicationContextAware, EnvironmentAware {
     ApplicationContext applicationContext;
     Environment environment;
-
     private Map<String, Object> stub = new HashMap<>();
 
     public void start() {
