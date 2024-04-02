@@ -5,6 +5,7 @@ import as.rpc.core.api.LoadBalancer;
 import as.rpc.core.api.RegistryCenter;
 import as.rpc.core.api.Router;
 import as.rpc.core.api.RpcContext;
+import as.rpc.core.consumer.http.ASInvocationHandler;
 import as.rpc.core.util.MethodUtils;
 import lombok.Data;
 import org.springframework.context.ApplicationContext;
