@@ -1,10 +1,9 @@
-package as.rpc.core.consumer.http;
+package as.rpc.core.consumer;
 
 import as.rpc.core.api.RpcContext;
 import as.rpc.core.api.RpcRequest;
 import as.rpc.core.api.RpcResponse;
-import as.rpc.core.consumer.HttpInvoker;
-import as.rpc.core.consumer.OkHttpInvoker;
+import as.rpc.core.consumer.http.OkHttpInvoker;
 import as.rpc.core.util.MethodUtils;
 import as.rpc.core.util.TypeUtils;
 

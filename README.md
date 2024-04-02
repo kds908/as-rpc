@@ -93,7 +93,7 @@
 **类型转换**
 返回的类型不匹配时，会报错。
 
-实际返回结果位于 as.rpc.core.consumer.http.ASInvocationHandler#invoke 中 RpcResponse
+实际返回结果位于 as.rpc.core.consumer.ASInvocationHandler#invoke 中 RpcResponse
 1. 创建类型转换工具类 as.rpc.core.util.TypeUtils
 2. 对基本数据类型、数组、Map等类型转换
 
