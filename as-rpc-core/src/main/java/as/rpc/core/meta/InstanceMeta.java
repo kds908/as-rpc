@@ -33,8 +33,7 @@ public class InstanceMeta {
         this.context = context;
     }
 
-    @Override
-    public String toString() {
+    public String toUrl() {
         return String.format("%s://%s:%d/%s", schema, host, port, context);
     }
 

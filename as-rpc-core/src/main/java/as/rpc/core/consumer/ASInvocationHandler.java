@@ -44,7 +44,7 @@ public class ASInvocationHandler implements InvocationHandler {
         InstanceMeta instance = context.getLoadBalancer().choose(instances);
         System.out.println("loadBalancer.choose(urls) ===> " + instance);
 
-        RpcResponse<?> response = httpInvoker.post(request, instance.toString());
+        RpcResponse<?> response = httpInvoker.post(request, instance.toUrl());
         if (response.isStatus()) {
             // 返回结果转为java Object, 返回类型为方法的 return type
             Object data = response.getData();
