@@ -4,6 +4,7 @@ import as.rpc.core.annotation.ASProvider;
 import as.rpc.core.api.RegistryCenter;
 import as.rpc.core.meta.InstanceMeta;
 import as.rpc.core.meta.ProviderMeta;
+import as.rpc.core.meta.ServiceMeta;
 import as.rpc.core.util.MethodUtils;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
@@ -36,6 +37,12 @@ public class ProviderBootstrap implements ApplicationContextAware {
     private InstanceMeta instance;
     @Value("${server.port}")
     private int port;
+    @Value("${app.id}")
+    private String app;
+    @Value("${app.namespace}")
+    private String namespace;
+    @Value("${app.env}")
+    private String env;
 
     /**
      * 初始化方法
@@ -73,7 +80,13 @@ public class ProviderBootstrap implements ApplicationContextAware {
      * @param service 服务
      */
     private void registerService(String service) {
-        rc.register(service, instance);
+        ServiceMeta serviceMeta = ServiceMeta.builder()
+                .app(app)
+                .namespace(namespace)
+                .env(env)
+                .name(service)
+                .build();
+        rc.register(serviceMeta, instance);
     }
 
     /**
@@ -81,7 +94,13 @@ public class ProviderBootstrap implements ApplicationContextAware {
      * @param service 服务
      */
     private void unregisterService(String service) {
-        rc.unregister(service, instance);
+        ServiceMeta serviceMeta = ServiceMeta.builder()
+                .app(app)
+                .namespace(namespace)
+                .env(env)
+                .name(service)
+                .build();
+        rc.unregister(serviceMeta, instance);
     }
 
     private void generateInterface(Object e) {

@@ -1,6 +1,7 @@
 package as.rpc.core.api;
 
 import as.rpc.core.meta.InstanceMeta;
+import as.rpc.core.meta.ServiceMeta;
 import as.rpc.core.registry.ChangedListener;
 
 import java.util.List;
@@ -23,14 +24,14 @@ public interface RegistryCenter {
      * @param service 服务
      * @param instance 实例名
      */
-    void register(String service, InstanceMeta instance);
+    void register(ServiceMeta service, InstanceMeta instance);
 
     /**
      * 取消注册
      * @param service 服务
      * @param instance 实例名
      */
-    void unregister(String service, InstanceMeta instance);
+    void unregister(ServiceMeta service, InstanceMeta instance);
 
     // consumer 侧
 
@@ -39,7 +40,7 @@ public interface RegistryCenter {
      * @param service
      * @return
      */
-    List<InstanceMeta> fetchAll(String service);
+    List<InstanceMeta> fetchAll(ServiceMeta service);
 
     /**
      * 订阅
@@ -48,7 +49,7 @@ public interface RegistryCenter {
      * @param service 服务
      * @param listener 监听
      */
-     void subscribe(String service, ChangedListener listener);
+     void subscribe(ServiceMeta service, ChangedListener listener);
 
     // void heartbeat();
 
@@ -73,22 +74,22 @@ public interface RegistryCenter {
         }
 
         @Override
-        public void register(String service, InstanceMeta instance) {
+        public void register(ServiceMeta service, InstanceMeta instance) {
 
         }
 
         @Override
-        public void unregister(String service, InstanceMeta instance) {
+        public void unregister(ServiceMeta service, InstanceMeta instance) {
 
         }
 
         @Override
-        public List<InstanceMeta> fetchAll(String service) {
+        public List<InstanceMeta> fetchAll(ServiceMeta service) {
             return providers;
         }
 
         @Override
-        public void subscribe(String service, ChangedListener listener) {
+        public void subscribe(ServiceMeta service, ChangedListener listener) {
 
         }
     }
