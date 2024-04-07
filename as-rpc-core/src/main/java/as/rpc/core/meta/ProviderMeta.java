@@ -1,5 +1,6 @@
 package as.rpc.core.meta;
 
+import lombok.Builder;
 import lombok.Data;
 
 import java.lang.reflect.Method;
@@ -12,6 +13,7 @@ import java.lang.reflect.Method;
  * @date 2024/3/20 11:39
  */
 @Data
+@Builder
 public class ProviderMeta {
     Method method;
     String methodSign;

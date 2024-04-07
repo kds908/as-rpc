@@ -17,7 +17,7 @@ public class RoundRibbonLoadBalance<T> implements LoadBalancer<T> {
 
     @Override
     public T choose(List<T> providers) {
-        if (providers == null || providers.size() == 0) return null;
+        if (providers == null || providers.isEmpty()) return null;
         if (providers.size() == 1) return providers.get(0);
         // 保证index永为正数
         return providers.get((index.incrementAndGet() & 0x7fffffff) % providers.size());

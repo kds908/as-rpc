@@ -3,17 +3,15 @@ package as.rpc.core.consumer;
 import as.rpc.core.api.LoadBalancer;
 import as.rpc.core.api.RegistryCenter;
 import as.rpc.core.api.Router;
-import as.rpc.core.cluster.RandomLoadBalance;
 import as.rpc.core.cluster.RoundRibbonLoadBalance;
-import as.rpc.core.registry.ZkRegistryCenter;
+import as.rpc.core.meta.InstanceMeta;
+import as.rpc.core.registry.zk.ZkRegistryCenter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
-
-import java.util.List;
 
 /**
  * Description for this class
@@ -43,14 +41,14 @@ public class ConsumerConfig {
     }
 
     @Bean
-    public LoadBalancer loadBalancer() {
+    public LoadBalancer<InstanceMeta> loadBalancer() {
 //        return LoadBalancer.Default;
 //        return new RandomLoadBalance();
-        return new RoundRibbonLoadBalance();
+        return new RoundRibbonLoadBalance<>();
     }
 
     @Bean
-    public Router router() {
+    public Router<?> router() {
         return Router.Default;
     }
 

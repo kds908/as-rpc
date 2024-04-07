@@ -1,5 +1,7 @@
 package as.rpc.core.api;
 
+import as.rpc.core.meta.InstanceMeta;
+
 import java.util.List;
 
 /**
@@ -12,5 +14,5 @@ import java.util.List;
 public interface LoadBalancer<T> {
     T choose(List<T> providers);
 
-    LoadBalancer Default = p -> (p == null || p.size() == 0) ? null : p.get(0);
+    LoadBalancer<InstanceMeta> Default = p -> (p == null || p.size() == 0) ? null : p.get(0);
 }

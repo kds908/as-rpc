@@ -1,8 +1,7 @@
 package as.rpc.core.provider;
 
 import as.rpc.core.api.RegistryCenter;
-import as.rpc.core.consumer.ConsumerBootstrap;
-import as.rpc.core.registry.ZkRegistryCenter;
+import as.rpc.core.registry.zk.ZkRegistryCenter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;

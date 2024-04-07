@@ -1,5 +1,7 @@
 package as.rpc.core.api;
 
+import as.rpc.core.meta.InstanceMeta;
+
 import java.util.List;
 
 /**
