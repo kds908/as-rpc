@@ -6,7 +6,8 @@ server:
 
 as-rpc:
   providers: http://localhost:8081/, http://localhost:8082/, http://localhost:8083/
-
+  zk-server: 101.35.215.95:21819
+  zk-root: as-rpc
 app:
   id: app1
   namespace: default
