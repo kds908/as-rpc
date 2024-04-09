@@ -2,7 +2,6 @@ package as.rpc.demo.provider;
 
 import as.rpc.core.api.RpcRequest;
 import as.rpc.core.api.RpcResponse;
-import as.rpc.core.provider.ProviderBootstrap;
 import as.rpc.core.provider.ProviderConfig;
 import as.rpc.core.provider.ProviderInvoker;
 import org.springframework.beans.factory.annotation.Autowired;
