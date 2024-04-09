@@ -4,6 +4,7 @@ import as.rpc.core.meta.InstanceMeta;
 import lombok.Data;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Description for this class
@@ -13,10 +14,11 @@ import java.util.List;
  */
 @Data
 public class RpcContext {
-    // todo
     List<Filter> filters;
 
     Router<InstanceMeta> router;
 
     LoadBalancer<InstanceMeta> loadBalancer;
+
+    private Map<String, String> parameters;
 }
