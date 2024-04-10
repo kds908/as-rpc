@@ -6,7 +6,7 @@ import java.util.List;
 
 /**
  * @author abners.
- * @description
+ * @description 路由
  * @date 2024/3/26 11:10
  */
 public interface Router<T> {

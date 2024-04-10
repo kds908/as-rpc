@@ -1,9 +1,11 @@
 package as.rpc.core.consumer;
 
+import as.rpc.core.api.Filter;
 import as.rpc.core.api.LoadBalancer;
 import as.rpc.core.api.RegistryCenter;
 import as.rpc.core.api.Router;
 import as.rpc.core.cluster.RoundRibbonLoadBalance;
+import as.rpc.core.filter.CacheFilter;
 import as.rpc.core.meta.InstanceMeta;
 import as.rpc.core.registry.zk.ZkRegistryCenter;
 import lombok.extern.slf4j.Slf4j;
@@ -57,5 +59,10 @@ public class ConsumerConfig {
     @Bean(initMethod = "start", destroyMethod = "stop")
     public RegistryCenter consumerRC() {
         return new ZkRegistryCenter();
+    }
+
+    @Bean
+    public Filter filter() {
+        return new CacheFilter();
     }
 }

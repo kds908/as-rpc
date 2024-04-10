@@ -19,6 +19,4 @@ public class RpcContext {
     Router<InstanceMeta> router;
 
     LoadBalancer<InstanceMeta> loadBalancer;
-
-    private Map<String, String> parameters;
 }

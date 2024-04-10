@@ -1,8 +1,10 @@
 package as.rpc.core.api;
 
 import lombok.Data;
+import lombok.ToString;
 
 @Data
+@ToString
 public class RpcRequest {
     // 调用服务 eg: as.rpc.demo.api.UserService
     private String service;
