@@ -6,6 +6,7 @@ import as.rpc.core.api.Router;
 import as.rpc.core.cluster.RoundRibbonLoadBalance;
 import as.rpc.core.meta.InstanceMeta;
 import as.rpc.core.registry.zk.ZkRegistryCenter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationRunner;
@@ -21,6 +22,7 @@ import org.springframework.core.annotation.Order;
  * <p>
  * {@code @date:} 2024/3/19 21:47
  */
+@Slf4j
 @Configuration
 public class ConsumerConfig {
     @Value("${as-rpc.providers}")
@@ -34,9 +36,9 @@ public class ConsumerConfig {
     @Order(Integer.MIN_VALUE)
     public ApplicationRunner consumerConfigRunner(@Autowired ConsumerBootstrap consumerBootstrap) {
         return x -> {
-            System.out.println("consumerBootstrap starting...");
+            log.info("consumerBootstrap starting...");
             consumerBootstrap.start();
-            System.out.println("consumerBootstrap started...");
+            log.info("consumerBootstrap started...");
         };
     }
 

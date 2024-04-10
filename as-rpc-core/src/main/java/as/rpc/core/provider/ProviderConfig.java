@@ -2,6 +2,7 @@ package as.rpc.core.provider;
 
 import as.rpc.core.api.RegistryCenter;
 import as.rpc.core.registry.zk.ZkRegistryCenter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
@@ -16,6 +17,7 @@ import org.springframework.core.annotation.Order;
  * <p>
  * {@code @date:} 2024/3/18 22:21
  */
+@Slf4j
 @Configuration
 public class ProviderConfig {
     @Bean
@@ -43,9 +45,9 @@ public class ProviderConfig {
     @Order(Integer.MIN_VALUE)
     public ApplicationRunner providerConfigRunner(@Autowired ProviderBootstrap providerBootstrap) {
         return x -> {
-            System.out.println("providerBootstrap starting...");
+            log.info("providerBootstrap starting...");
             providerBootstrap.start();
-            System.out.println("providerBootstrap started...");
+            log.info("providerBootstrap started...");
         };
     }
 }

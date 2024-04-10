@@ -9,6 +9,7 @@ import as.rpc.core.meta.InstanceMeta;
 import as.rpc.core.meta.ServiceMeta;
 import as.rpc.core.util.MethodUtils;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -29,6 +30,7 @@ import java.util.Map;
  * <p>
  * {@code @date:} 2024/3/19 21:43
  */
+@Slf4j
 @Data
 public class ConsumerBootstrap implements ApplicationContextAware, EnvironmentAware {
     ApplicationContext applicationContext;
@@ -54,7 +56,7 @@ public class ConsumerBootstrap implements ApplicationContextAware, EnvironmentAw
             Object bean = applicationContext.getBean(name);
             List<Field> fields = MethodUtils.findAnnotationField(bean.getClass(), ASConsumer.class);
             fields.forEach(f -> {
-                System.out.println(" ======>>> " + f.getName());
+                log.info(" ======>>> " + f.getName());
                 try {
                     Class<?> service = f.getType();
                     String serviceName = service.getCanonicalName();
@@ -89,7 +91,7 @@ public class ConsumerBootstrap implements ApplicationContextAware, EnvironmentAw
                 .build();
         // 从注册中心获取所有服务节点，并转换服务地址
         List<InstanceMeta> providers = rc.fetchAll(serviceMeta);
-        System.out.println(" =====> map to providers:");
+        log.info(" =====> map to providers:");
         providers.forEach(System.out::println);
 
         rc.subscribe(serviceMeta, event -> {

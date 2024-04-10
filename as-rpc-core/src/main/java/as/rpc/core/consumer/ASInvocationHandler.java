@@ -7,6 +7,7 @@ import as.rpc.core.consumer.http.OkHttpInvoker;
 import as.rpc.core.meta.InstanceMeta;
 import as.rpc.core.util.MethodUtils;
 import as.rpc.core.util.TypeUtils;
+import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -20,6 +21,7 @@ import java.util.List;
  * <p>
  * {@code @date:} 2024/3/19 22:00
  */
+@Slf4j
 public class ASInvocationHandler implements InvocationHandler {
     Class<?> service;
     RpcContext context;
@@ -42,7 +44,7 @@ public class ASInvocationHandler implements InvocationHandler {
 
         List<InstanceMeta> instances = context.getRouter().route(providers);
         InstanceMeta instance = context.getLoadBalancer().choose(instances);
-        System.out.println("loadBalancer.choose(urls) ===> " + instance);
+        log.debug("loadBalancer.choose(urls) ===> " + instance);
 
         RpcResponse<?> response = httpInvoker.post(request, instance.toUrl());
         if (response.isStatus()) {

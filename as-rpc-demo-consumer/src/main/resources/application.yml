@@ -12,3 +12,7 @@ app:
   id: app1
   namespace: default
   env: dev
+logging:
+  level:
+    root: error
+    as.rpc: info
