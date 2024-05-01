@@ -6,18 +6,18 @@ package as.rpc.core.api;
  * @date 2024/3/26 11:10
  */
 public interface Filter {
-    RpcResponse preFilter(RpcRequest request);
+    Object preFilter(RpcRequest request);
 
-    RpcResponse postFilter(RpcRequest request, RpcResponse response);
+    Object postFilter(RpcRequest request, RpcResponse response);
 
     Filter Default = new Filter() {
         @Override
-        public RpcResponse preFilter(RpcRequest request) {
+        public Object preFilter(RpcRequest request) {
             return null;
         }
 
         @Override
-        public RpcResponse postFilter(RpcRequest request, RpcResponse response) {
+        public Object postFilter(RpcRequest request, RpcResponse response) {
             return response;
         }
 

@@ -25,7 +25,7 @@ public class CacheFilter implements Filter {
     }
 
     @Override
-    public RpcResponse postFilter(RpcRequest request, RpcResponse response) {
+    public Object postFilter(RpcRequest request, RpcResponse response) {
         cache.putIfAbsent(request.toString(), response);
         return response;
     }
