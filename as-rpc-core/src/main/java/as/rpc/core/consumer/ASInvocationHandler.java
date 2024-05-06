@@ -76,8 +76,7 @@ public class ASInvocationHandler implements InvocationHandler {
     private static Object castReturnResult(Method method, RpcResponse<?> response) throws Exception {
         if (response.isStatus()) {
             // 返回结果转为java Object, 返回类型为方法的 return type
-            Object data = response.getData();
-            return TypeUtils.castMethodResult(method, data);
+            return TypeUtils.castMethodResult(method, response.getData());
         } else {
             throw response.getEx();
         }
