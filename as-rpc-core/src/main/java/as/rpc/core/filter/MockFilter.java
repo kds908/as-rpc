@@ -36,7 +36,7 @@ public class MockFilter implements Filter {
     }
 
     @Override
-    public Object postFilter(RpcRequest request, RpcResponse response) {
+    public Object postFilter(RpcRequest request, RpcResponse response, Object result) {
         return null;
     }
 }

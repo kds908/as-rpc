@@ -48,10 +48,10 @@ public class ASInvocationHandler implements InvocationHandler {
         request.setArgs(args);
 
         for (Filter filter : context.getFilters()) {
-            RpcResponse preResponse = filter.preFilter(request);
-            if (preResponse != null) {
-                log.debug("filter.preFilter(request) ===> {}", preResponse);
-                return castReturnResult(method, preResponse);
+            Object preResult = filter.preFilter(request);
+            if (preResult != null) {
+                log.debug("filter.preFilter(request) ===> {}", preResult);
+                return preResult;
             }
         }
 
@@ -60,13 +60,17 @@ public class ASInvocationHandler implements InvocationHandler {
         log.debug("loadBalancer.choose(urls) ===> " + instance);
 
         RpcResponse<?> response = httpInvoker.post(request, instance.toUrl());
+        Object result = castReturnResult(method, response);
 
         // 这里拿到的可能不是最终值，需要再设计一下
         for (Filter filter : context.getFilters()) {
-            response = filter.postFilter(request, response);
+            Object filterResult = filter.postFilter(request, response, result);
+            if (filterResult != null) {
+                return filterResult;
+            }
         }
 
-        return castReturnResult(method, response);
+        return result;
     }
 
     private static Object castReturnResult(Method method, RpcResponse<?> response) throws Exception {

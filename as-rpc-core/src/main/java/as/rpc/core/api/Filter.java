@@ -8,7 +8,7 @@ package as.rpc.core.api;
 public interface Filter {
     Object preFilter(RpcRequest request);
 
-    Object postFilter(RpcRequest request, RpcResponse response);
+    Object postFilter(RpcRequest request, RpcResponse response, Object result);
 
     Filter Default = new Filter() {
         @Override
@@ -17,8 +17,8 @@ public interface Filter {
         }
 
         @Override
-        public Object postFilter(RpcRequest request, RpcResponse response) {
-            return response;
+        public Object postFilter(RpcRequest request, RpcResponse response, Object result) {
+            return null;
         }
 
     };
