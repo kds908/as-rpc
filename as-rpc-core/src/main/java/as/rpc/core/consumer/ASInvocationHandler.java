@@ -1,9 +1,6 @@
 package as.rpc.core.consumer;
 
-import as.rpc.core.api.Filter;
-import as.rpc.core.api.RpcContext;
-import as.rpc.core.api.RpcRequest;
-import as.rpc.core.api.RpcResponse;
+import as.rpc.core.api.*;
 import as.rpc.core.consumer.http.OkHttpInvoker;
 import as.rpc.core.meta.InstanceMeta;
 import as.rpc.core.util.MethodUtils;
@@ -72,12 +69,17 @@ public class ASInvocationHandler implements InvocationHandler {
         return result;
     }
 
-    private static Object castReturnResult(Method method, RpcResponse<?> response) throws Exception {
+    private static Object castReturnResult(Method method, RpcResponse<?> response) {
         if (response.isStatus()) {
             // 返回结果转为java Object, 返回类型为方法的 return type
             return TypeUtils.castMethodResult(method, response.getData());
         } else {
-            throw response.getEx();
+            Exception exception = response.getEx();
+            if (exception instanceof ASRpcException ex) {
+                throw ex;
+            } else {
+                throw new ASRpcException(exception, ASRpcException.UNKNOWN_EXCEPTION);
+            }
         }
     }
 

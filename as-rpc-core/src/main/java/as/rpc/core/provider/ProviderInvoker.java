@@ -1,5 +1,6 @@
 package as.rpc.core.provider;
 
+import as.rpc.core.api.ASRpcException;
 import as.rpc.core.api.RpcRequest;
 import as.rpc.core.api.RpcResponse;
 import as.rpc.core.meta.ProviderMeta;
@@ -38,9 +39,9 @@ public class ProviderInvoker {
             response.setStatus(true);
             response.setData(result);
         } catch (InvocationTargetException e) {
-            response.setEx(new RuntimeException(e.getTargetException().getMessage()));
+            response.setEx(new ASRpcException(e.getTargetException().getMessage()));
         } catch (IllegalAccessException e) {
-            response.setEx(new RuntimeException(e.getMessage()));
+            response.setEx(new ASRpcException(e.getMessage()));
         }
         return response;
     }
