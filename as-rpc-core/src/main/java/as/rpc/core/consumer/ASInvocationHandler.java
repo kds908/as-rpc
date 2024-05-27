@@ -75,10 +75,10 @@ public class ASInvocationHandler implements InvocationHandler {
             return TypeUtils.castMethodResult(method, response.getData());
         } else {
             Exception exception = response.getEx();
-            if (exception instanceof ASRpcException ex) {
+            if (exception instanceof RpcException ex) {
                 throw ex;
             } else {
-                throw new ASRpcException(exception, ASRpcException.UNKNOWN_EXCEPTION);
+                throw new RpcException(exception, RpcException.UNKNOWN_EXCEPTION);
             }
         }
     }

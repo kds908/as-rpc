@@ -1,6 +1,6 @@
 package as.rpc.core.registry.zk;
 
-import as.rpc.core.api.ASRpcException;
+import as.rpc.core.api.RpcException;
 import as.rpc.core.api.RegistryCenter;
 import as.rpc.core.meta.InstanceMeta;
 import as.rpc.core.meta.ServiceMeta;
@@ -69,7 +69,7 @@ public class ZkRegistryCenter implements RegistryCenter {
             log.info("  =====>  register to zk: " + instancePath);
             client.create().withMode(CreateMode.EPHEMERAL).forPath(instancePath, "provider".getBytes());
         } catch (Exception e) {
-            throw new ASRpcException(e);
+            throw new RpcException(e);
         }
     }
 
@@ -86,7 +86,7 @@ public class ZkRegistryCenter implements RegistryCenter {
             log.info("   =====>  zk service unregister");
             client.delete().quietly().forPath(instancePath);
         } catch (Exception e) {
-            throw new ASRpcException(e);
+            throw new RpcException(e);
         }
     }
 
@@ -100,7 +100,7 @@ public class ZkRegistryCenter implements RegistryCenter {
             nodes.forEach(System.out::println);
             return mapInstance(nodes);
         } catch (Exception e) {
-            throw new ASRpcException(e);
+            throw new RpcException(e);
         }
     }
 

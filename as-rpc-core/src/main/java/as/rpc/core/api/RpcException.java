@@ -1,7 +1,7 @@
 package as.rpc.core.api;
 
 /**
- * Description for this class
+ * RPC 统一异常类
  *
  * <p>
  *
@@ -9,29 +9,29 @@ package as.rpc.core.api;
  * <p>
  * @date: 2024/5/27 10:15
  */
-public class ASRpcException extends RuntimeException {
+public class RpcException extends RuntimeException {
     private String errorCode;
 
-    public ASRpcException() {
+    public RpcException() {
     }
 
-    public ASRpcException(String message) {
+    public RpcException(String message) {
         super(message);
     }
 
-    public ASRpcException(String message, Throwable cause) {
+    public RpcException(String message, Throwable cause) {
         super(message, cause);
     }
 
-    public ASRpcException(Throwable cause) {
+    public RpcException(Throwable cause) {
         super(cause);
     }
 
-    public ASRpcException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+    public RpcException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
     }
 
-    public ASRpcException(Throwable cause, String errorCode) {
+    public RpcException(Throwable cause, String errorCode) {
         super(cause);
         this.errorCode = errorCode;
     }
